@@ -1,0 +1,6 @@
+spring:
+  rabbitmq:
+    host: localhost
+    virtual-host: webhookie
+    username: webhookie-admin
+    password: AdminP@XX

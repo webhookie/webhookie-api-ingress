@@ -1,0 +1,26 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: api-ingress
+  rabbitmq:
+    host: ${WH_AMQP_HOST}
+    virtual-host: ${WH_AMQP_V_HOST}
+    username: ${WH_AMQP_USERNAME}
+    password: ${WH_AMQP_PASSWORD}
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /manage
+  endpoint:
+    health:
+      show-details: ALWAYS
+  info:
+    git:
+      mode: full
