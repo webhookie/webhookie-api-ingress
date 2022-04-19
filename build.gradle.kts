@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
   id("org.springframework.boot") version "2.6.6"
@@ -57,6 +59,31 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
   useJUnitPlatform()
+}
+
+tasks.named<BootJar>("bootJar") {
+  layered {
+    application {
+      intoLayer("spring-boot-loader") {
+        include("org/springframework/boot/loader/**")
+      }
+      intoLayer("application")
+    }
+    dependencies {
+      intoLayer("snapshot-dependencies") {
+        include("*:*:*SNAPSHOT")
+      }
+      intoLayer("internal-dependencies") {
+        include("com.webhookie:*:*")
+      }
+      intoLayer("dependencies")
+    }
+    layerOrder = listOf("dependencies", "spring-boot-loader", "internal-dependencies", "snapshot-dependencies", "application")
+  }
+}
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+  imageName = "webhookie.com/services/${project.name.replace("webhookie-", "")}"
 }
 
 springBoot {

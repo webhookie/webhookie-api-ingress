@@ -1,0 +1,18 @@
+spring:
+  reactor:
+    debug-agent:
+      enabled: false
+  rabbitmq:
+    host: webhookie-amqp
+    virtual-host: webhookie
+    username: webhookie-admin
+    password: AdminP@XX
+  devtools:
+    add-properties: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://registry-service:8761}/eureka/
+    enabled: true
+  instance:
+    preferIpAddress: true
