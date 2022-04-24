@@ -58,7 +58,7 @@ class TrafficServiceDelegate(
       .retrieve()
       .bodyToMono(String::class.java)
       .map { it == "true" }
-      .doOnNext { log.info("traceId: '{}' exists? '{}'", it) }
+      .doOnNext { log.info("traceId: '{}' exists? '{}'", traceId, it) }
   }
 
   fun checkOrGenerateTrace(traceId: String?): Mono<String> {
