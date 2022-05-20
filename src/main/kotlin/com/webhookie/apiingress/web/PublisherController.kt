@@ -80,7 +80,7 @@ class PublisherController(
 
         internalIngressChannel.send(message)
       }
-      .doOnNext { log.debug("Message with traceId: '{}' is being processed") }
+      .doOnNext { log.debug("Message with traceId: '{}' is being processed", traceId) }
       .map { "OK" }
   }
 
