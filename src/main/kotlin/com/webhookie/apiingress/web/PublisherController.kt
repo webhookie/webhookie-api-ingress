@@ -22,21 +22,27 @@
 
 package com.webhookie.apiingress.web
 
+import com.webhookie.apiingress.web.IngressAPIDocs.Companion.REQUEST_MAPPING_INGRESS
 import com.webhookie.common.Constants.Queue.Headers.Companion.HEADER_CONTENT_TYPE
 import com.webhookie.common.Constants.Queue.Headers.Companion.WH_HEADER_AUTHORIZED_SUBSCRIBER
 import com.webhookie.common.Constants.Queue.Headers.Companion.WH_HEADER_TOPIC
 import com.webhookie.common.Constants.Queue.Headers.Companion.WH_HEADER_TRACE_ID
+import com.webhookie.common.service.IdGenerator
 import com.webhookie.config.web.OpenAPIConfig.Companion.OAUTH2_SCHEME
-import com.webhookie.apiingress.service.TrafficServiceDelegate
-import com.webhookie.apiingress.web.IngressAPIDocs.Companion.REQUEST_MAPPING_INGRESS
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.slf4j.Logger
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.messaging.SubscribableChannel
 import org.springframework.messaging.support.MessageBuilder
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.switchIfEmpty
+import reactor.kotlin.core.publisher.toMono
 
 /**
  *
@@ -48,7 +54,7 @@ import reactor.core.publisher.Mono
 @RequestMapping(REQUEST_MAPPING_INGRESS)
 class PublisherController(
   private val log: Logger,
-  private val traceServiceDelegate: TrafficServiceDelegate,
+  private val idGenerator: IdGenerator,
   private val internalIngressChannel: SubscribableChannel,
 ) {
   @PostMapping(REQUEST_MAPPING_CONSUMER_EVENT, produces = [MediaType.TEXT_PLAIN_VALUE])
@@ -63,8 +69,8 @@ class PublisherController(
       defaultValue = ""
     ) authorizedSubscribers: List<String>
   ): Mono<String> {
-    return traceServiceDelegate.checkOrGenerateTrace(traceId)
-      .doOnError { log.warn("Message was rejected due to duplicate traceId '{}'", traceId) }
+    return Mono.justOrEmpty(traceId)
+      .switchIfEmpty { idGenerator.generate().toMono() }
       .map {
         log.info("Publishing a message to event queue....")
 
