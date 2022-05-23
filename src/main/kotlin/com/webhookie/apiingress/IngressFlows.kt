@@ -1,17 +1,13 @@
 package com.webhookie.apiingress
 
 import com.webhookie.common.message.ConsumerMessage
-import org.springframework.amqp.core.AmqpTemplate
-import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.integration.amqp.dsl.Amqp
 import org.springframework.integration.amqp.outbound.AmqpOutboundEndpoint
 import org.springframework.integration.dsl.IntegrationFlow
 import org.springframework.integration.dsl.integrationFlow
 import org.springframework.integration.transformer.GenericTransformer
 import org.springframework.messaging.Message
-import org.springframework.messaging.MessageChannel
 import org.springframework.messaging.SubscribableChannel
 
 /**
