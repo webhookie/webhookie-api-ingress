@@ -1,4 +1,7 @@
 spring:
+  cloud:
+    kubernetes:
+      enabled: false
   rabbitmq:
     host: localhost
     virtual-host: webhookie

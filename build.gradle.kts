@@ -3,12 +3,12 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-  id("org.springframework.boot") version "2.6.6"
-  id("io.spring.dependency-management") version "1.0.11.RELEASE"
-  kotlin("jvm") version "1.6.10"
-  kotlin("plugin.spring") version "1.6.10"
-  kotlin("plugin.allopen") version "1.6.10"
-  kotlin("kapt") version "1.6.10"
+  id("org.springframework.boot") version "2.7.2"
+  id("io.spring.dependency-management") version "1.0.12.RELEASE"
+  kotlin("jvm") version "1.6.21"
+  kotlin("plugin.spring") version "1.6.21"
+  kotlin("plugin.allopen") version "1.6.21"
+  kotlin("kapt") version "1.6.21"
 }
 
 kapt.includeCompileClasspath = false
@@ -32,7 +32,7 @@ repositories {
   mavenCentral()
 }
 
-extra["springCloudVersion"] = "2021.0.1"
+extra["springCloudVersion"] = "2021.0.3"
 
 dependencies {
   implementation(project(":webhookie-spring-boot-starter-service"))
