@@ -5,11 +5,7 @@ plugins {
   kotlin("kapt") version "1.6.21"
 }
 
-configurations {
-  compileOnly {
-    extendsFrom(configurations.annotationProcessor.get())
-  }
-}
+kapt.includeCompileClasspath = false
 
 dependencies {
   implementation(project(":webhookie-spring-boot-starter-service"))
