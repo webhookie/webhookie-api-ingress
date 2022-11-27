@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.integration.amqp.outbound.AmqpOutboundEndpoint
 import org.springframework.integration.dsl.IntegrationFlow
 import org.springframework.integration.dsl.integrationFlow
-import org.springframework.integration.transformer.GenericTransformer
+import org.springframework.integration.core.GenericTransformer
 import org.springframework.messaging.Message
 import org.springframework.messaging.SubscribableChannel
 
