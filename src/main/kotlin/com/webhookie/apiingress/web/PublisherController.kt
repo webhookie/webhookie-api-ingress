@@ -30,7 +30,7 @@ import com.webhookie.common.Constants.Queue.Headers.Companion.WH_HEADER_TRACE_ID
 import com.webhookie.common.service.IdGenerator
 import com.webhookie.config.web.OpenAPIConfig.Companion.OAUTH2_SCHEME
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
-import org.slf4j.Logger
+import com.webhookie.common.extension.log
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.messaging.SubscribableChannel
@@ -53,7 +53,6 @@ import reactor.kotlin.core.publisher.toMono
 @SecurityRequirement(name = OAUTH2_SCHEME)
 @RequestMapping(REQUEST_MAPPING_INGRESS)
 class PublisherController(
-  private val log: Logger,
   private val idGenerator: IdGenerator,
   private val internalIngressChannel: SubscribableChannel,
 ) {
