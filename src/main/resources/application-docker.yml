@@ -9,10 +9,3 @@ spring:
     password: AdminP@XX
   devtools:
     add-properties: false
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVICE_URL:http://registry-service:8761}/eureka/
-    enabled: true
-  instance:
-    preferIpAddress: true
