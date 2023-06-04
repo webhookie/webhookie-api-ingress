@@ -48,7 +48,7 @@ class IngressConfig(private val idGenerator: IdGenerator) {
   fun internalIngressChannel(): SubscribableChannel {
     return MessageChannels
       .publishSubscribe(Executors.newCachedThreadPool())
-      .get()
+      .getObject()
   }
 
   @Bean
@@ -56,7 +56,7 @@ class IngressConfig(private val idGenerator: IdGenerator) {
     .outboundAdapter(amqpTemplate)
     .exchangeName("ingress")
     .routingKey("incoming-message")
-    .get()
+    .getObject()
 
   @Bean
   fun toConsumerMessageTransformer(): GenericTransformer<Message<ByteArray>, ConsumerMessage> {
